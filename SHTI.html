@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>山海经神兽人格测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f0e6;
+            font-family: 'Segoe UI', '华文楷书', 'Microsoft YaHei', 'WenQuanYi Micro Hei', serif;
+            padding: 20px;
+            color: #2c2416;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #e8dccc;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2e5a4f 0%, #1e3e35 100%);
+            padding: 24px 20px;
+            text-align: center;
+            color: #fef3d6;
+        }
+
+        header h1 {
+            font-size: 1.9rem;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            font-weight: normal;
+            text-shadow: 2px 2px 0 #1a2f28;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .quiz-area {
+            padding: 24px 28px;
+        }
+
+        .question-card {
+            background: #fefaf0;
+            border-radius: 28px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #efe0c6;
+            transition: all 0.2s;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2e5a4f;
+            border-left: 5px solid #c9a87b;
+            padding-left: 16px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .story-bg {
+            font-size: 0.85rem;
+            color: #8f7a5c;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            font-style: italic;
+            padding-left: 21px;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .option-btn {
+            flex: 1;
+            min-width: 180px;
+            background: white;
+            border: 2px solid #e2d4b9;
+            border-radius: 60px;
+            padding: 12px 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fffcf5;
+            color: #3a2c1c;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .option-btn:hover {
+            background: #f3ecd9;
+            border-color: #b9925b;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            background: #2e5a4f;
+            border-color: #2e5a4f;
+            color: #fff3e0;
+            box-shadow: 0 4px 12px rgba(46,90,79,0.2);
+        }
+
+        .submit-area {
+            text-align: center;
+            margin: 32px 0 20px;
+        }
+
+        .submit-btn {
+            background: #c9a87b;
+            border: none;
+            padding: 14px 42px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c2416;
+            border-radius: 48px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+        }
+
+        .submit-btn:hover {
+            background: #b88b54;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        .result-area {
+            background: #f4ecd9;
+            margin-top: 20px;
+            border-radius: 32px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #e2cfaa;
+            transition: all 0.3s;
+        }
+
+        .result-card {
+            background: #fffaf0;
+            border-radius: 28px;
+            padding: 24px;
+        }
+
+        .result-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2e5a4f;
+            margin: 10px 0 6px;
+        }
+
+        .result-tag {
+            font-size: 1.1rem;
+            color: #b88b54;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .result-desc {
+            text-align: left;
+            background: #fff6e8;
+            padding: 18px;
+            border-radius: 24px;
+            margin: 16px 0;
+        }
+
+        .result-desc p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .restart-btn {
+            background: none;
+            border: 2px solid #c9a87b;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            color: #5e3e1e;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 18px;
+            color: #b59e78;
+            border-top: 1px solid #efe0c6;
+        }
+
+        @media (max-width: 550px) {
+            .quiz-area {
+                padding: 16px;
+            }
+            .question-card {
+                padding: 16px;
+            }
+            .option-btn {
+                min-width: 140px;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>🐉 山海经 · 神兽人格</h1>
+        <p>依女娲、精卫、大禹之问，照见你内心的上古灵兽</p>
+    </header>
+
+    <div class="quiz-area" id="quizArea">
+        <!-- 动态生成10道题 -->
+        <div id="questionsContainer"></div>
+        <div class="submit-area">
+            <button class="submit-btn" id="submitBtn">✨ 窥见神兽真身 ✨</button>
+        </div>
+        <div id="resultContainer" class="result-area hidden"></div>
+    </div>
+    <div class="footer">
+        🌿 依据 MBTI (E/I, N/S, F/T, P/J) · 对应十六山海神兽
+    </div>
+</div>
+
+<script>
+    // ---------- 山海经题目数据 (融入神话世界观) ----------
+    const questions = [
+        {
+            text: "女娲造人时多捏了一块泥，可为你造一位完美伴侣，你希望TA……",
+            story: "📖 《山海经·大荒西经》：女娲之肠，化为十神。女娲抟黄土造人，众生始生。",
+            options: ["A. 活泼开朗，陪你游历四方结交好友", "B. 安静内敛，与你独处也安然自在"],
+            scores: [{E:1, I:0}, {E:0, I:1}]
+        },
+        {
+            text: "精卫日复一日衔石填海，独自坚持一件大事，你会……",
+            story: "📖 《山海经·北山经》：炎帝少女女娃，游于东海，溺而不返，故为精卫，常衔西山之木石，以堙于东海。",
+            options: ["A. 找志同道合的伙伴一起行动", "B. 享受独自奋斗，按自己节奏完成"],
+            scores: [{E:1, I:0}, {E:0, I:1}]
+        },
+        {
+            text: "助大禹治水，面对滔天洪水，你更倾向……",
+            story: "📖 《山海经·海内经》：禹鲧是始布土，均定九州。禹治洪水，通轘辕山，化为熊。",
+            options: ["A. 思考治水根本原理，宏观规划全局", "B. 直接勘察地形，从具体细节入手解决"],
+            scores: [{N:1, S:0}, {N:0, S:1}]
+        },
+        {
+            text: "夸父逐日，渴死道中。你更佩服他哪种特质？",
+            story: "📖 《山海经·海外北经》：夸父与日逐走，入日。渴欲得饮，饮于河渭；河渭不足，北饮大泽。未至，道渴而死。",
+            options: ["A. 追逐不可能的理想，不问结果", "B. 坚韧不拔，纵使失败亦不悔"],
+            scores: [{N:1, S:0}, {N:0, S:1}]
+        },
+        {
+            text: "后羿射日后，嫦娥服不死药飞升成仙，夫妻永隔。你更看重……",
+            story: "📖 《淮南子·览冥训》引古：羿请不死之药于西王母，姮娥窃以奔月。",
+            options: ["A. 妻子长生不老，即使分离也替她高兴", "B. 遵守婚姻承诺，愿两人同生共死"],
+            scores: [{F:1, T:0}, {F:0, T:1}]
+        },
+        {
+            text: "共工怒触不周山，致天塌地陷。你认为他犯大错主要是因为……",
+            story: "📖 《山海经·海外北经》：共工之臣曰相柳氏……共工怒触不周之山，天柱折，地维绝。",
+            options: ["A. 过于冲动，被愤怒冲昏头脑", "B. 缺乏理智的判断力"],
+            scores: [{F:1, T:0}, {F:0, T:1}]
+        },
+        {
+            text: "进入一片未知山海秘境，门前刻着神兽图腾，你会……",
+            story: "📖 《山海经》载异兽七十余，见则大水，见则天下安宁，莫测其踪。",
+            options: ["A. 先观察环境，做好万全准备再开门", "B. 直接推门而入，享受未知刺激"],
+            scores: [{J:1, P:0}, {J:0, P:1}]
+        },
+        {
+            text: "前往西王母所在的昆仑山求取宝物，你会……",
+            story: "📖 《山海经·西山经》：昆仑之丘，是实惟帝之下都，神陆吾司之。西王母其状如人，虎齿豹尾。",
+            options: ["A. 做好详细路线规划，备足干粮", "B. 边走边看，相信路上有惊喜"],
+            scores: [{J:1, P:0}, {J:0, P:1}]
+        },
+        {
+            text: "天帝降下洪水，需立刻选择治水方法，你会……",
+            story: "📖 大禹治水，三过家门而不入，改堵为疏。",
+            options: ["A. 先拿出方案，分配任务，一步步实施", "B. 先行动，见招拆招，灵活调整"],
+            scores: [{J:1, P:0}, {J:0, P:1}]
+        },
+        {
+            text: "集市上有人卖一只《山海经》异兽，你会……",
+            story: "📖 或如狸而白首，或状如黄囊，见则其邑有火。",
+            options: ["A. 查阅资料了解来历后再决定", "B. 凭眼缘直接买下来，回去再研究"],
+            scores: [{J:1, P:0}, {J:0, P:1}]
+        }
+    ];
+
+    // ---------- 16神兽数据 ----------
+    const beasts = {
+        "INFP": { name: "白泽", tag: "理想主义者 · 智慧之泽", 
+                   strengths: "理想主义，共情力强，智慧通透，灵性魅力", 
+                   weaknesses: "不切实际，敏感内耗，行动迟缓" },
+        "ENFP": { name: "鲲鹏", tag: "追梦者 · 扶摇九万里", 
+                   strengths: "热爱自由，创造力爆棚，热情激励他人，社交力强", 
+                   weaknesses: "三分钟热度，忽略现实，缺乏细节耐心" },
+        "INFJ": { name: "天狐", tag: "引路人 · 九尾通天", 
+                   strengths: "洞察力极强，善良温和，领悟神秘，指导他人", 
+                   weaknesses: "完美主义，过度内敛，理想与现实冲突" },
+        "ENFJ": { name: "凤凰", tag: "和平领袖 · 百鸟之王", 
+                   strengths: "天生领导者，组织力强，致力和谐，感召力强", 
+                   weaknesses: "过度在意他人，忽略自我，逃避冲突" },
+        "INTP": { name: "金乌", tag: "孤独智者 · 日中之乌", 
+                   strengths: "逻辑思维强，善于研究复杂概念，创新突出", 
+                   weaknesses: "社交力弱，脱离实际，情感表达困难" },
+        "ENTP": { name: "白虎", tag: "好奇挑战者 · 西方战神", 
+                   strengths: "好奇心旺盛，善于辩论，聪明机智，挑战传统", 
+                   weaknesses: "喜欢抬杠，注意力分散，说话直接易得罪人" },
+        "INTJ": { name: "獬豸", tag: "公正战略家 · 是非明辨", 
+                   strengths: "追求高效逻辑，战略思维强，坚守原则，独立思考", 
+                   weaknesses: "冷漠无情，对低效率缺乏耐心，完美主义压力" },
+        "ENTJ": { name: "青龙", tag: "尊贵帝王 · 龙族之首", 
+                   strengths: "魅力领导者，决策力强，格局远大，推动进步", 
+                   weaknesses: "控制欲强，过于强势，对失败容忍度低" },
+        "ISFP": { name: "青鸟", tag: "温和艺术家 · 幸福使者", 
+                   strengths: "温和低调，审美出众，联系情感，追求内心平和", 
+                   weaknesses: "内向不主动，委屈自己，缺乏长远规划" },
+        "ESFP": { name: "陵鱼", tag: "活泼表演家 · 海洋之星", 
+                   strengths: "充满活力，开朗活泼，待人友善，热爱艺术", 
+                   weaknesses: "冲动行事，注意力分散，情绪敏感" },
+        "ISTP": { name: "应龙", tag: "实干工匠 · 创世之龙", 
+                   strengths: "动手能力强，冷静理性，善于应对突发", 
+                   weaknesses: "不善表达情感，独来独往，对理论缺乏耐心" },
+        "ESTP": { name: "饕餮", tag: "能量聚合者 · 吞噬万物", 
+                   strengths: "好奇心强，行动力强，旺盛生命力，抓住机遇", 
+                   weaknesses: "易被欲望驱使，缺乏长远规划，不稳定感" },
+        "ISFJ": { name: "腓腓", tag: "温柔守护者 · 解忧神宠", 
+                   strengths: "乐观细心，善良勇敢，排忧解愁，踏实可靠", 
+                   weaknesses: "过度付出，不喜欢变化，过于在意评价" },
+        "ESFJ": { name: "九尾狐", tag: "魅力外交家 · 青丘灵狐", 
+                   strengths: "个人魅力强，情调品味出众，社交力出色", 
+                   weaknesses: "过度在意评价，委屈自己，对批评敏感" },
+        "ISTJ": { name: "烛龙", tag: "恪守规则者 · 昼夜之主", 
+                   strengths: "恪守规则，执行力强，诚实可靠，逻辑清晰", 
+                   weaknesses: "缺乏变通，表达冷淡，完美主义严格" },
+        "ESTJ": { name: "夔牛", tag: "坚定执行者 · 雷声如鸣", 
+                   strengths: "果断坚定，执行力强，责任感强，勇于承担", 
+                   weaknesses: "专横霸道，缺乏耐心，不善处理复杂人际关系" }
+    };
+
+    // 存储用户答案
+    let userAnswers = new Array(10).fill(null); // 每个元素存储 {E,I,N,S,F,T,J,P} 得分对象
+
+    // 渲染题目
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.dataset.qidx = idx;
+            card.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="story-bg">${q.story}</div>
+                <div class="options" id="options-${idx}">
+                    <button class="option-btn" data-opt="0">${q.options[0]}</button>
+                    <button class="option-btn" data-opt="1">${q.options[1]}</button>
+                </div>
+            `;
+            container.appendChild(card);
+
+            // 绑定选项事件
+            const btns = card.querySelectorAll('.option-btn');
+            btns.forEach((btn, optIndex) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // 清除同题目其他高亮
+                    btns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    // 存储该题的得分
+                    const scoreMap = q.scores[optIndex];
+                    userAnswers[idx] = { ...scoreMap };
+                });
+            });
+        });
+    }
+
+    // 计算MBTI类型
+    function computeMBTI() {
+        let totalE = 0, totalI = 0;
+        let totalN = 0, totalS = 0;
+        let totalF = 0, totalT = 0;
+        let totalJ = 0, totalP = 0;
+
+        for (let ans of userAnswers) {
+            if (!ans) continue;
+            if (ans.E) totalE += ans.E;
+            if (ans.I) totalI += ans.I;
+            if (ans.N) totalN += ans.N;
+            if (ans.S) totalS += ans.S;
+            if (ans.F) totalF += ans.F;
+            if (ans.T) totalT += ans.T;
+            if (ans.J) totalJ += ans.J;
+            if (ans.P) totalP += ans.P;
+        }
+
+        const e_or_i = totalE >= totalI ? 'E' : 'I';
+        const n_or_s = totalN >= totalS ? 'N' : 'S';
+        const f_or_t = totalF >= totalT ? 'F' : 'T';
+        const j_or_p = totalJ >= totalP ? 'J' : 'P';
+
+        return e_or_i + n_or_s + f_or_t + j_or_p;
+    }
+
+    // 显示结果
+    function showResult(mbti) {
+        const beast = beasts[mbti];
+        if (!beast) {
+            // fallback
+            console.warn("未找到匹配神兽", mbti);
+            document.getElementById('resultContainer').innerHTML = `<div class="result-card">未找到对应神兽，请确认所有题目已作答。</div>`;
+            document.getElementById('resultContainer').classList.remove('hidden');
+            return;
+        }
+
+        const resultHTML = `
+            <div class="result-card">
+                <div style="font-size: 3rem;">🐉✨</div>
+                <div class="result-name">${beast.name}</div>
+                <div class="result-tag">「 ${beast.tag} 」</div>
+                <div class="result-desc">
+                    <p>🌿 <strong>优势</strong> ：${beast.strengths}</p>
+                    <p>🍂 <strong>劣势</strong> ：${beast.weaknesses}</p>
+                    <p style="margin-top:12px; font-size:0.9rem; color:#6f5a3a;">⚡ 你的 MBTI 类型 · ${mbti} ⚡</p>
+                </div>
+                <button class="restart-btn" id="restartBtn">🔄 重测山海缘 🔄</button>
+            </div>
+        `;
+        const resultContainer = document.getElementById('resultContainer');
+        resultContainer.innerHTML = resultHTML;
+        resultContainer.classList.remove('hidden');
+        // 滚动到结果
+        resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            // 重置所有
+            userAnswers = new Array(10).fill(null);
+            renderQuestions();
+            resultContainer.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // 检查是否所有题都已答
+    function allAnswered() {
+        for (let i = 0; i < userAnswers.length; i++) {
+            if (userAnswers[i] === null) return false;
+        }
+        return true;
+    }
+
+    // 提交逻辑
+    function onSubmit() {
+        if (!allAnswered()) {
+            alert("请先完成全部10道山海经之问～ 🐉");
+            return;
+        }
+        const mbti = computeMBTI();
+        showResult(mbti);
+    }
+
+    // 初始化
+    function init() {
+        renderQuestions();
+        document.getElementById('submitBtn').addEventListener('click', onSubmit);
+    }
+
+    init();
+</script>
+</body>
+</html>
